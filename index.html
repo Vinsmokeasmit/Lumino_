@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen – Your photography portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eceff1;--card:#fff;--ink:#1b2430;--mute:#5d6877;--line:#d5dae0;--safe:#e0412b;--safe-d:#b92f1c;--r:14px;
+--head:'Bricolage Grotesque',system-ui,sans-serif;--body:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--safe);outline-offset:2px}
+h1,h2,h3{font-family:var(--head);line-height:1.05;letter-spacing:-.02em}
+.wrap{width:min(1180px,92%);margin:0 auto}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(236,239,241,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:28px;height:68px}
+.logo{font-family:var(--head);font-weight:800;font-size:1.4rem;display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;border-radius:50%;background:var(--safe);box-shadow:0 0 0 4px #e0412b33}
+.links{display:flex;gap:22px;margin-left:auto;align-items:center}
+.links a.nl{color:var(--mute);font-weight:500}
+.links a.nl:hover,.links a.nl.on{color:var(--ink)}
+.burger{display:none;margin-left:auto;font-size:1.6rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:700;transition:.15s}
+.btn.p{background:var(--safe);color:#fff}.btn.p:hover{background:var(--safe-d)}
+.btn.o{border:1.5px solid var(--ink)}.btn.o:hover{background:var(--ink);color:#fff}
+.btn.g{color:var(--mute)}.btn.g:hover{color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+main{flex:1;padding-bottom:70px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding:70px 0 40px}
+.hero h1{font-size:clamp(2.8rem,6.5vw,5.4rem);font-weight:800}
+.hero p{font-size:1.2rem;color:var(--mute);max-width:46ch;margin:22px 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.prints{position:relative;height:430px}
+.prints img{position:absolute;width:62%;aspect-ratio:4/5;object-fit:cover;border:10px solid #fff;border-bottom-width:34px;box-shadow:0 14px 30px #1b243026;transition:.35s}
+.prints img:nth-child(1){left:0;top:20px;transform:rotate(-6deg)}
+.prints img:nth-child(2){right:0;top:0;transform:rotate(5deg)}
+.prints img:nth-child(3){left:22%;bottom:-10px;transform:rotate(-1deg)}
+.prints:hover img:nth-child(1){transform:rotate(-10deg) translateX(-12px)}
+.prints:hover img:nth-child(2){transform:rotate(9deg) translateX(12px)}
+/* sections */
+.sec{padding:46px 0 0}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.sh h2{font-size:clamp(1.8rem,3.5vw,2.6rem)}
+.sh p{color:var(--mute)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:7px 16px;border-radius:999px;border:1.5px solid var(--line);font-weight:500;background:var(--card)}
+.chip:hover{border-color:var(--ink)}.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.pcard{background:var(--card);border-radius:var(--r);padding:18px;display:flex;gap:14px;align-items:center;border:1px solid var(--line);transition:.15s}
+.pcard:hover{border-color:var(--ink);transform:translateY(-2px)}
+.av{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--head);font-weight:700;font-size:1.2rem;flex:none}
+.pcard small{color:var(--mute)}
+.masonry{columns:4 240px;column-gap:14px}
+.ph{break-inside:avoid;margin-bottom:14px;position:relative;border-radius:10px;overflow:hidden;cursor:zoom-in;background:#cfd5db}
+.ph img{width:100%;display:block;transition:transform .4s}
+.ph:hover img{transform:scale(1.04)}
+.ph .cap{position:absolute;inset:auto 0 0 0;padding:34px 12px 10px;background:linear-gradient(transparent,#000a);color:#fff;font-size:.9rem;opacity:0;transition:.2s;display:flex;justify-content:space-between;gap:8px}
+.ph:hover .cap,.ph:focus-within .cap{opacity:1}
+.ph .del{position:absolute;top:8px;right:8px;background:#fff;border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:700;opacity:0;transition:.2s}
+.ph:hover .del{opacity:1}
+.empty{border:2px dashed var(--line);border-radius:var(--r);padding:50px 20px;text-align:center;color:var(--mute)}
+.empty .btn{margin-top:16px}
+/* forms */
+.auth{display:grid;place-items:center;padding:60px 0}
+.box{background:var(--card);border-radius:20px;padding:36px;width:min(440px,100%);border:1px solid var(--line)}
+.box h1{font-size:2.2rem;margin-bottom:6px}
+.box>p{color:var(--mute);margin-bottom:22px}
+label{display:block;font-weight:700;font-size:.9rem;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+.role{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.role label{margin:0;border:1.5px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;font-weight:500}
+.role input{display:none}
+.role label:has(input:checked){border-color:var(--safe);background:#e0412b12}
+.role b{display:block}.role span{font-size:.82rem;color:var(--mute)}
+.err{color:var(--safe-d);font-size:.9rem;min-height:1.3em;margin-top:10px}
+.box .btn.p{width:100%;margin-top:14px}
+.alt{text-align:center;margin-top:18px;color:var(--mute)}.alt a{color:var(--ink);font-weight:700;text-decoration:underline}
+/* profile */
+.phead{display:flex;gap:22px;align-items:center;padding:50px 0 10px;flex-wrap:wrap}
+.phead .av{width:92px;height:92px;font-size:2.2rem}
+.phead h1{font-size:2.6rem}.phead p{color:var(--mute);max-width:60ch}
+.phead .btn{margin-left:auto}
+.drop{border:2px dashed var(--mute);border-radius:var(--r);padding:44px 20px;text-align:center;background:var(--card);cursor:pointer;transition:.15s}
+.drop.over,.drop:hover{border-color:var(--safe);background:#e0412b0d}
+.up{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px}
+.prev{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:14px}
+.prev div{aspect-ratio:1;border-radius:8px;background:#cfd5db center/cover;position:relative}
+.bar{position:absolute;left:0;bottom:0;height:5px;background:var(--safe);width:0;border-radius:0 0 8px 8px;transition:width .2s}
+.note{background:#fff7e0;border:1px solid #f0d98a;border-radius:10px;padding:12px 14px;font-size:.9rem;margin-top:14px}
+/* lightbox + toast */
+.lb{position:fixed;inset:0;background:#0c1118ee;z-index:50;display:none;place-items:center;padding:20px}
+.lb.open{display:grid}
+.lb figure{max-width:min(1100px,96vw);color:#fff}
+.lb img{max-width:100%;max-height:78vh;display:block;margin:auto;border-radius:6px}
+.lb figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.lb .x{position:absolute;top:16px;right:20px;color:#fff;font-size:2rem}
+.lb .nv{position:absolute;top:50%;color:#fff;font-size:2.6rem;padding:10px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,90px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;z-index:60;transition:.3s;font-weight:500}
+.toast.show{transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--mute);font-size:.9rem}
+@media(max-width:820px){
+.hero{grid-template-columns:1fr;padding-top:40px}.prints{height:340px}.up{grid-template-columns:1fr}
+.burger{display:block}
+.links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--paper);flex-direction:column;align-items:stretch;padding:18px 4%;border-bottom:1px solid var(--line);gap:14px}
+.links.open{display:flex}.phead .btn{margin-left:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+  <a class="logo" href="index.html"><i></i>Lumen</a>
+  <button class="burger" id="burger" aria-label="Open menu">&#9776;</button>
+  <div class="links" id="links"></div>
+</nav></div></header>
+<main><div class="wrap" id="app"></div></main>
+<footer><div class="wrap">Lumen &middot; Portfolio demo. Frontend only; accounts and photo records live in this browser until the backend is connected.</div></footer>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer"></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+
+/* ============ CONFIG ============
+   Safe for the browser: cloud name + UNSIGNED upload preset only.
+   NEVER put your Cloudinary API secret in frontend code. */
+const CLOUDINARY = { cloudName: "", uploadPreset: "" };
+const CATS = ["Portrait","Landscape","Street","Wedding","Wildlife","Travel"];
+const $ = (s,e=document)=>e.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cloudReady = ()=>CLOUDINARY.cloudName && CLOUDINARY.uploadPreset;
+
+/* ============ STORE (swap for API calls when backend is ready) ============ */
+const DB = {
+  get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{toast("Browser storage is full. Connect Cloudinary to save more.");return false}}
+};
+const pic = (seed,w=700,h=900)=>`https://picsum.photos/seed/${seed}/${w}/${h}`;
+function seed(){
+  if(DB.get("lumen_seeded")) return;
+  DB.set("lumen_users",[
+    {id:"u1",name:"miraj ",username:"miraj",email:"miraj@demo.com",pass:"demo1234",role:"photographer",bio:"Portrait and street photographer chasing honest light in busy cities."},
+    {id:"u2",name:"bimal ",username:"bimal",email:"bimal@demo.com",pass:"demo1234",role:"photographer",bio:"Himalayan landscapes and slow travel, shot on film and digital."},
+    {id:"u3",name:"rabi" ,username:"rabi",email:"rabi@demo.com",pass:"demo1234",role:"photographer",bio:"Wedding and wildlife stories told quietly."}]);
+  const P=[["miraj","Golden hour on Fifth","Portrait","m1"],["miraj","Rain on the crossing","Street","m2"],["miraj","Window seat","Portrait","m3"],
+  ["bimal","Fishtail at dawn","Landscape","a1"],["bimal","Phewa Lake mist","Landscape","a2"],["bimal","Trail to base camp","Travel","a3"],
+  ["rabi","First dance","Wedding","l1"],["rabi","The heron waits","Wildlife","l2"],["rabi","Vows","Wedding","l3"]];
+  DB.set("lumen_photos",P.map((p,i)=>({id:"p"+i,owner:p[0],title:p[1],cat:p[2],url:pic(p[3],700,[900,600,800][i%3]),date:Date.now()-i*864e5})));
+  DB.set("lumen_seeded",1);
+}
+const users=()=>DB.get("lumen_users",[]), photos=()=>DB.get("lumen_photos",[]);
+const me=()=>users().find(u=>u.id===DB.get("lumen_session"));
+const byName=n=>users().find(u=>u.username===n);
+const thumb=(u,w=700)=>u.includes("res.cloudinary.com")?u.replace("/upload/",`/upload/w_${w},q_auto,f_auto/`):u;
+
+/* ============ UI HELPERS ============ */
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600)}
+const go=h=>{location.href=h};
+const ini=n=>n.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase();
+function gallery(list,owned){
+  if(!list.length) return `<div class="empty"><p>No photos here yet.</p>${owned?`<a class="btn p" href="upload.html">Upload your first photo</a>`:""}</div>`;
+  return `<div class="masonry">${list.map(p=>`<figure class="ph" data-id="${p.id}" tabindex="0">
+    <img loading="lazy" src="${esc(thumb(p.url))}" alt="${esc(p.title)} by ${esc(p.owner)}">
+    <figcaption class="cap"><span>${esc(p.title)}</span><span>@${esc(p.owner)}</span></figcaption>
+    ${owned?`<button class="del" data-del="${p.id}">Delete</button>`:""}</figure>`).join("")}</div>`;
+}
+function bindGallery(list){
+  document.querySelectorAll(".ph").forEach(el=>{
+    const open=()=>openLB(list,list.findIndex(p=>p.id===el.dataset.id));
+    el.onclick=e=>{if(e.target.dataset.del)return;open()};
+    el.onkeydown=e=>{if(e.key==="Enter")open()};
+  });
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{
+    if(!confirm("Delete this photo from your portfolio?"))return;
+    DB.set("lumen_photos",photos().filter(p=>p.id!==b.dataset.del));toast("Photo deleted");location.reload();
+  });
+}
+let lbList=[],lbI=0;
+function openLB(list,i){lbList=list;lbI=i;drawLB();$("#lb").classList.add("open");document.body.style.overflow="hidden"}
+function closeLB(){$("#lb").classList.remove("open");document.body.style.overflow=""}
+function drawLB(){
+  const p=lbList[lbI];
+  $("#lb").innerHTML=`<button class="x" data-a="x" aria-label="Close">×</button>
+  <button class="nv" style="left:10px" data-a="p" aria-label="Previous">‹</button><button class="nv" style="right:10px" data-a="n" aria-label="Next">›</button>
+  <figure><img src="${esc(thumb(p.url,1600))}" alt="${esc(p.title)}"><figcaption><div><b>${esc(p.title)}</b><br>${esc(p.cat)} · <a href="portfolio.html?u=${esc(p.owner)}" data-a="x" style="text-decoration:underline">@${esc(p.owner)}</a></div>
+  <a class="btn o" style="color:#fff;border-color:#fff" href="portfolio.html?u=${esc(p.owner)}" data-a="x">View portfolio</a></figcaption></figure>`;
+}
+$("#lb").onclick=e=>{const a=e.target.closest("[data-a]")?.dataset.a;
+  if(a==="x"||e.target.id==="lb")closeLB();
+  if(a==="n"){lbI=(lbI+1)%lbList.length;drawLB()} if(a==="p"){lbI=(lbI-1+lbList.length)%lbList.length;drawLB()}};
+document.onkeydown=e=>{if(!$("#lb").classList.contains("open"))return;
+  if(e.key==="Escape")closeLB();if(e.key==="ArrowRight"){lbI=(lbI+1)%lbList.length;drawLB()}if(e.key==="ArrowLeft"){lbI=(lbI-1+lbList.length)%lbList.length;drawLB()}};
+
+/* ============ NAV ============ */
+function nav(){
+  const u=me(),h=(location.pathname.split("/").pop()||"index.html")+location.search;
+  const l=(href,t)=>`<a class="nl ${h===href?"on":""}" href="${href}">${t}</a>`;
+  $("#links").innerHTML=l("index.html","Home")+l("explore.html","Explore")+(u
+    ?(u.role==="photographer"?l("upload.html","Upload")+l("portfolio.html?u="+u.username,"My portfolio"):"")+`<button class="btn o" id="out">Log out</button>`
+    :`<a class="btn g" href="login.html">Log in</a><a class="btn p" href="signup.html">Join free</a>`);
+  const o=$("#out");if(o)o.onclick=()=>{DB.set("lumen_session",null);toast("Logged out");go("index.html")};
+  $("#links").classList.remove("open");
+}
+$("#burger").onclick=()=>$("#links").classList.toggle("open");
+
+const pages={};
+
+/* ============ THIS PAGE: home ============ */
+pages.home=()=>{
+  const ps=photos().sort((a,b)=>b.date-a.date),pg=users().filter(u=>u.role==="photographer");
+  const hero=ps.slice(0,3);
+  $("#app").innerHTML=`
+  <section class="hero"><div>
+    <h1>Show your best frames to the world.</h1>
+    <p>Lumen gives every photographer a clean portfolio page, and every visitor a place to discover and enjoy great photography. Your originals stay safe in the cloud.</p>
+    <div class="cta"><a class="btn p" href="${me()?"upload.html":"signup.html"}">${me()?"Upload a photo":"Create your portfolio"}</a><a class="btn o" href="explore.html">Browse photos</a></div>
+  </div><div class="prints">${hero.map(p=>`<img src="${esc(thumb(p.url,600))}" alt="${esc(p.title)}">`).join("")}</div></section>
+  <section class="sec"><div class="sh"><div><h2>Photographers to follow</h2><p>Open a portfolio to see the full body of work.</p></div></div>
+  <div class="pgrid">${pg.map(u=>`<a class="pcard" href="portfolio.html?u=${u.username}"><div class="av">${ini(u.name)}</div><div><b>${esc(u.name)}</b><br><small>${photos().filter(p=>p.owner===u.username).length} photos</small></div></a>`).join("")}</div></section>
+  <section class="sec"><div class="sh"><div><h2>Latest work</h2><p>Fresh uploads from the community.</p></div><a class="btn o" href="explore.html">See all</a></div>
+  <div id="g"></div></section>`;
+  const list=ps.slice(0,8);$("#g").innerHTML=gallery(list);bindGallery(list);
+};
+
+seed();
+
+pages.home();
+nav();
+</script>
+</body>
+</html>
