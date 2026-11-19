@@ -140,18 +140,31 @@ const DB = {
   get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{toast("Browser storage is full. Connect Cloudinary to save more.");return false}}
 };
-const pic = (seed,w=700,h=900)=>`https://picsum.photos/seed/${seed}/${w}/${h}`;
+
+/* ============ SEED DATA (your own photos) ============
+   Put the image files in an "images" folder next to this HTML file
+   using exactly these file names. */
+const SEED_USERS=[
+  {id:"u1",name:"Miraj Puri",username:"miraj",email:"miarj@demo.com",pass:"demo1234",role:"photographer",bio:"Portrait and street photographer chasing honest light in busy cities."},
+  {id:"u2",name:"Bimal Adhikari",username:"bimal",email:"bimal@demo.com",pass:"demo1234",role:"photographer",bio:"Himalayan landscapes and slow travel, shot on film and digital."},
+  {id:"u3",name:"rabi ",username:"rabi",email:"rabi@demo.com",pass:"demo1234",role:"photographer",bio:"Wedding and wildlife stories told quietly."}];
+const SEED_PHOTOS=[
+  {title:"Pumdikot",        cat:"Landscape",owner:"rabi", url:"images/pumdikot.jpg"},
+  {title:"Phewa Lake",      cat:"Landscape",owner:"miraj",url:"images/phewa-lake.jpg"},
+  {title:"Octopus Waterfall",cat:"Travel",  owner:"bimal",url:"images/octopus-waterfall.jpg"},
+  {title:"Mardi Himal",     cat:"Portrait", owner:"miraj",url:"images/mardi-himal.jpg"},
+  {title:"Swayambhu",       cat:"Portrait", owner:"rabi", url:"images/swayambhu.jpg"},
+  {title:"Mardi Trek",      cat:"Landscape",owner:"bimal",url:"images/mardi-trek.jpg"}];
 function seed(){
-  if(DB.get("lumen_seeded")) return;
-  DB.set("lumen_users",[
-    {id:"u1",name:"Miraj Puri",username:"miraj",email:"miarj@demo.com",pass:"demo1234",role:"photographer",bio:"Portrait and street photographer chasing honest light in busy cities."},
-    {id:"u2",name:"Bimal Adhikari",username:"bimal",email:"bimal@demo.com",pass:"demo1234",role:"photographer",bio:"Himalayan landscapes and slow travel, shot on film and digital."},
-    {id:"u3",name:"rabi ",username:"rabi",email:"rabi@demo.com",pass:"demo1234",role:"photographer",bio:"Wedding and wildlife stories told quietly."}]);
-  const P=[["miraj","Golden hour on Fifth","Portrait","m1"],["miraj","Rain on the crossing","Street","m2"],["miraj","Window seat","Portrait","m3"],
-  ["bimal","Fishtail at dawn","Landscape","a1"],["bimal","Phewa Lake mist","Landscape","a2"],["bimal","Trail to base camp","Travel","a3"],
-  ["rabi","First dance","Wedding","l1"],["rabi","The heron waits","Wildlife","l2"],["rabi","Vows","Wedding","l3"]];
-  DB.set("lumen_photos",P.map((p,i)=>({id:"p"+i,owner:p[0],title:p[1],cat:p[2],url:pic(p[3],700,[900,600,800][i%3]),date:Date.now()-i*864e5})));
-  DB.set("lumen_seeded",1);
+  if(DB.get("lumen_seeded_v2")) return;
+  /* keep any accounts people created; add the demo ones if missing */
+  const old=DB.get("lumen_users",[]);
+  DB.set("lumen_users",[...SEED_USERS,...old.filter(u=>!SEED_USERS.some(s=>s.id===u.id))]);
+  /* drop the old placeholder photos (ids p0..p8), keep real uploads */
+  const keep=DB.get("lumen_photos",[]).filter(p=>!/^p\d+$/.test(p.id));
+  const fresh=SEED_PHOTOS.map((p,i)=>({id:"s"+i,owner:p.owner,title:p.title,cat:p.cat,url:p.url,date:Date.now()-i*864e5}));
+  DB.set("lumen_photos",[...fresh,...keep]);
+  DB.set("lumen_seeded_v2",1);
 }
 const users=()=>DB.get("lumen_users",[]), photos=()=>DB.get("lumen_photos",[]);
 const me=()=>users().find(u=>u.id===DB.get("lumen_session"));
